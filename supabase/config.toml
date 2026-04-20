@@ -1,0 +1,4 @@
+project_id = "kgzkzmjauhjhznetvqea"
+
+[functions.smart-tips]
+verify_jwt = false
