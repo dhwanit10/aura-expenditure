@@ -65,11 +65,12 @@ const Index = () => {
       return;
     }
     // Auto-deduct from balance
-    const balanceField = `${data.account_type}_balance` as const;
+    const balanceField = `${data.account_type}_balance` as "upi_balance" | "cash_balance" | "cheque_balance";
     const newBalance = Number(profile[balanceField]) - data.amount;
+    const update: Partial<Profile> = { [balanceField]: newBalance };
     const { error: bErr } = await supabase
       .from("profiles")
-      .update({ [balanceField]: newBalance })
+      .update(update)
       .eq("user_id", userId);
     if (bErr) toast.error(bErr.message);
     toast.success("Logged ✨");
@@ -86,10 +87,11 @@ const Index = () => {
     }
     // Refund balance
     if (expense && profile) {
-      const balanceField = `${expense.account_type}_balance` as const;
+      const balanceField = `${expense.account_type}_balance` as "upi_balance" | "cash_balance" | "cheque_balance";
+      const update: Partial<Profile> = { [balanceField]: Number(profile[balanceField]) + Number(expense.amount) };
       await supabase
         .from("profiles")
-        .update({ [balanceField]: Number(profile[balanceField]) + Number(expense.amount) })
+        .update(update)
         .eq("user_id", userId);
     }
     toast.success("Removed");
