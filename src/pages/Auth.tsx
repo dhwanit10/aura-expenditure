@@ -61,20 +61,20 @@ const Auth = () => {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center px-6 py-12 relative overflow-hidden">
+    <main className="min-h-screen flex items-center justify-center px-4 sm:px-6 py-8 sm:py-12 relative overflow-hidden">
       <div aria-hidden className="absolute inset-0 -z-10">
-        <div className="absolute top-10 left-1/4 w-96 h-96 rounded-full bg-primary/30 blur-3xl animate-float" />
-        <div className="absolute bottom-10 right-1/4 w-96 h-96 rounded-full bg-secondary/25 blur-3xl animate-pulse-glow" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-72 h-72 rounded-full bg-accent/15 blur-3xl" />
+        <div className="absolute top-10 left-1/4 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-primary/30 blur-3xl animate-float" />
+        <div className="absolute bottom-10 right-1/4 w-64 sm:w-96 h-64 sm:h-96 rounded-full bg-secondary/25 blur-3xl animate-pulse-glow" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-48 sm:w-72 h-48 sm:h-72 rounded-full bg-accent/15 blur-3xl" />
       </div>
 
-      <section className="w-full max-w-md glass-card p-10 grain relative animate-scale-in">
-        <header className="mb-8 text-center">
-          <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground mb-3">Aura · Ledger</p>
-          <h1 className="font-display text-5xl text-gradient-warm leading-none">
+      <section className="w-full max-w-md glass-card p-6 sm:p-10 grain relative animate-scale-in">
+        <header className="mb-6 sm:mb-8 text-center">
+          <p className="text-[10px] sm:text-xs uppercase tracking-[0.4em] text-muted-foreground mb-2 sm:mb-3">Aura · Ledger</p>
+          <h1 className="font-display text-4xl sm:text-5xl text-gradient-warm leading-none">
             {mode === "signin" ? "Welcome back" : "Begin"}
           </h1>
-          <p className="text-muted-foreground mt-3">
+          <p className="text-muted-foreground mt-2 sm:mt-3 text-sm sm:text-base">
             {mode === "signin" ? "Your finances, glowing again." : "Track your aura, in colour."}
           </p>
         </header>
