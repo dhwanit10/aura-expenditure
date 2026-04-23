@@ -64,7 +64,6 @@ const Index = () => {
       toast.error(error.message);
       return;
     }
-    // Auto-deduct from balance
     const balanceField = `${data.account_type}_balance` as "upi_balance" | "cash_balance" | "cheque_balance";
     const newBalance = Number(profile[balanceField]) - data.amount;
     const update: Partial<Profile> = { [balanceField]: newBalance };
@@ -85,7 +84,6 @@ const Index = () => {
       toast.error(error.message);
       return;
     }
-    // Refund balance
     if (expense && profile) {
       const balanceField = `${expense.account_type}_balance` as "upi_balance" | "cash_balance" | "cheque_balance";
       const update: Partial<Profile> = { [balanceField]: Number(profile[balanceField]) + Number(expense.amount) };
@@ -119,8 +117,8 @@ const Index = () => {
 
   if (loading || !profile) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="font-display text-3xl text-gradient-warm animate-pulse-glow">Reading your aura…</div>
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="font-display text-2xl sm:text-3xl text-gradient-warm animate-pulse-glow text-center">Reading your aura…</div>
       </div>
     );
   }
@@ -128,20 +126,21 @@ const Index = () => {
   const currency = profile.currency || "₹";
 
   return (
-    <main className="min-h-screen px-4 md:px-8 py-8 max-w-[1400px] mx-auto">
-      <header className="flex items-center justify-between mb-8 animate-fade-up">
-        <div>
-          <p className="text-xs uppercase tracking-[0.5em] text-muted-foreground">Aura</p>
-          <h1 className="font-display text-3xl mt-1">
+    <main className="min-h-screen px-3 sm:px-4 md:px-8 py-5 sm:py-8 max-w-[1400px] mx-auto">
+      <header className="flex items-center justify-between mb-5 sm:mb-8 animate-fade-up">
+        <div className="min-w-0 flex-1">
+          <p className="text-[10px] sm:text-xs uppercase tracking-[0.5em] text-muted-foreground">Aura</p>
+          <h1 className="font-display text-2xl sm:text-3xl mt-1 truncate">
             Hello, <span className="text-gradient-warm">{profile.display_name || "friend"}</span>
           </h1>
         </div>
-        <Button onClick={handleSignOut} variant="ghost" size="sm" className="rounded-full hover:bg-secondary/10 hover:text-secondary">
-          <LogOut className="w-4 h-4 mr-2" /> Sign out
+        <Button onClick={handleSignOut} variant="ghost" size="sm" className="rounded-full hover:bg-secondary/10 hover:text-secondary shrink-0 ml-2 h-8 w-8 sm:h-auto sm:w-auto p-0 sm:px-3 sm:py-1.5">
+          <LogOut className="w-4 h-4 sm:mr-2" />
+          <span className="hidden sm:inline">Sign out</span>
         </Button>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-5">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-5 mb-4 sm:mb-5">
         <div className="lg:col-span-3">
           <BalanceHero
             upi={Number(profile.upi_balance)}
@@ -164,20 +163,21 @@ const Index = () => {
         </div>
       </div>
 
-      <div className="mb-5">
+      <div className="mb-4 sm:mb-5">
         <ChartsPanel expenses={expenses} currency={currency} />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
-        <div className="lg:col-span-2">
+      {/* On mobile: Add expense first (more important action), then history */}
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-5">
+        <div className="lg:col-span-2 order-1 lg:order-none">
           <AddExpenseCard onSubmit={handleAddExpense} />
         </div>
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3 order-2 lg:order-none">
           <HistoryList expenses={expenses} currency={currency} onDelete={handleDelete} />
         </div>
       </div>
 
-      <footer className="mt-12 text-center text-xs text-muted-foreground/60 tracking-widest uppercase">
+      <footer className="mt-8 sm:mt-12 text-center text-[10px] sm:text-xs text-muted-foreground/60 tracking-widest uppercase">
         Aura · An expense ledger that glows
       </footer>
 

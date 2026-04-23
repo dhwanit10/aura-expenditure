@@ -54,28 +54,28 @@ export function HistoryList({ expenses, currency, onDelete }: Props) {
     a === "upi" ? "text-butter bg-butter/10" : a === "cash" ? "text-accent bg-accent/10" : "text-secondary bg-secondary/10";
 
   return (
-    <section className="glass-card grain relative p-7 animate-fade-up" style={{ animationDelay: "0.25s" }}>
-      <div className="flex items-baseline justify-between mb-6 flex-wrap gap-2">
+    <section className="glass-card grain relative p-5 sm:p-7 animate-fade-up" style={{ animationDelay: "0.25s" }}>
+      <div className="flex items-baseline justify-between mb-4 sm:mb-6 flex-wrap gap-2">
         <div>
-          <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">History</p>
-          <h3 className="font-display text-3xl mt-1">Where it went</h3>
+          <p className="text-[10px] sm:text-xs uppercase tracking-[0.4em] text-muted-foreground">History</p>
+          <h3 className="font-display text-2xl sm:text-3xl mt-1">Where it went</h3>
         </div>
         <div className="text-right">
-          <p className="text-xs text-muted-foreground uppercase tracking-widest">Filtered total</p>
-          <p className="font-display text-2xl text-secondary tabular">{formatMoney(totalFiltered, currency)}</p>
+          <p className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-widest">Filtered total</p>
+          <p className="font-display text-lg sm:text-2xl text-secondary tabular">{formatMoney(totalFiltered, currency)}</p>
         </div>
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      {/* Filters — stacked on mobile */}
+      <div className="flex flex-col sm:flex-row flex-wrap gap-2 mb-4 sm:mb-6">
         {/* Range */}
-        <div className="flex gap-1 p-1 rounded-full bg-surface-glow border border-border/30">
+        <div className="flex gap-1 p-1 rounded-full bg-surface-glow border border-border/30 self-start">
           {(["week", "month", "all"] as FilterRange[]).map((r) => (
             <button
               key={r}
               onClick={() => setRangeFilter(r)}
               className={cn(
-                "px-4 py-1.5 rounded-full text-xs uppercase tracking-wider transition-smooth",
+                "px-3 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs uppercase tracking-wider transition-smooth",
                 rangeFilter === r ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -85,13 +85,13 @@ export function HistoryList({ expenses, currency, onDelete }: Props) {
         </div>
 
         {/* Account */}
-        <div className="flex gap-1 p-1 rounded-full bg-surface-glow border border-border/30">
+        <div className="flex gap-1 p-1 rounded-full bg-surface-glow border border-border/30 self-start overflow-x-auto">
           {(["all", ...ACCOUNTS.map((a) => a.id)] as FilterAccount[]).map((a) => (
             <button
               key={a}
               onClick={() => setAccountFilter(a)}
               className={cn(
-                "px-3 py-1.5 rounded-full text-xs uppercase tracking-wider transition-smooth",
+                "px-2.5 sm:px-3 py-1.5 rounded-full text-[10px] sm:text-xs uppercase tracking-wider transition-smooth whitespace-nowrap",
                 accountFilter === a ? "bg-accent text-accent-foreground" : "text-muted-foreground hover:text-foreground"
               )}
             >
@@ -104,7 +104,7 @@ export function HistoryList({ expenses, currency, onDelete }: Props) {
         <select
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="bg-surface-glow border border-border/30 rounded-full px-4 py-1.5 text-xs uppercase tracking-wider text-foreground hover:border-primary/40 transition-smooth focus:outline-none focus:ring-2 focus:ring-primary/40"
+          className="bg-surface-glow border border-border/30 rounded-full px-3 sm:px-4 py-1.5 text-[10px] sm:text-xs uppercase tracking-wider text-foreground hover:border-primary/40 transition-smooth focus:outline-none focus:ring-2 focus:ring-primary/40 self-start"
         >
           <option value="all">All categories</option>
           {CATEGORIES.map((c) => (
@@ -116,7 +116,7 @@ export function HistoryList({ expenses, currency, onDelete }: Props) {
       </div>
 
       {/* List */}
-      <div className="space-y-6 max-h-[500px] overflow-y-auto pr-2">
+      <div className="space-y-5 sm:space-y-6 max-h-[400px] sm:max-h-[500px] overflow-y-auto pr-1 sm:pr-2">
         {grouped.length === 0 ? (
           <p className="text-center text-muted-foreground py-12 italic font-display">No entries here yet.</p>
         ) : (
@@ -125,10 +125,10 @@ export function HistoryList({ expenses, currency, onDelete }: Props) {
             return (
               <div key={date}>
                 <div className="flex items-baseline justify-between mb-2 sticky top-0 bg-surface/80 backdrop-blur-md py-1 -mx-1 px-1 rounded">
-                  <p className="text-xs uppercase tracking-widest text-muted-foreground">
-                    {format(parseISO(date), "EEEE, d MMM yyyy")}
+                  <p className="text-[10px] sm:text-xs uppercase tracking-widest text-muted-foreground">
+                    {format(parseISO(date), "EEE, d MMM")}
                   </p>
-                  <p className="text-xs tabular text-muted-foreground">{formatMoney(dayTotal, currency)}</p>
+                  <p className="text-[10px] sm:text-xs tabular text-muted-foreground">{formatMoney(dayTotal, currency)}</p>
                 </div>
                 <ul className="space-y-1.5">
                   {items.map((e) => {
@@ -136,32 +136,32 @@ export function HistoryList({ expenses, currency, onDelete }: Props) {
                     return (
                       <li
                         key={e.id}
-                        className="group flex items-center gap-3 p-3 rounded-xl bg-surface-glow/50 hover:bg-surface-2 transition-smooth"
+                        className="group flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3 rounded-xl bg-surface-glow/50 hover:bg-surface-2 transition-smooth"
                       >
-                        <div className="w-10 h-10 rounded-xl bg-surface-2 flex items-center justify-center text-xl shrink-0">
+                        <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-surface-2 flex items-center justify-center text-lg sm:text-xl shrink-0">
                           {cat.emoji}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-baseline gap-2">
-                            <p className="font-medium text-foreground truncate">{cat.label}</p>
-                            <span className={cn("text-[10px] uppercase tracking-widest px-2 py-0.5 rounded-full", accountAccent(e.account_type))}>
+                          <div className="flex items-center gap-1.5 sm:gap-2">
+                            <p className="font-medium text-sm sm:text-base text-foreground truncate">{cat.label}</p>
+                            <span className={cn("text-[9px] sm:text-[10px] uppercase tracking-widest px-1.5 sm:px-2 py-0.5 rounded-full shrink-0", accountAccent(e.account_type))}>
                               {e.account_type}
                             </span>
                           </div>
                           {e.reason && (
-                            <p className="text-xs text-muted-foreground truncate italic font-display">"{e.reason}"</p>
+                            <p className="text-[11px] sm:text-xs text-muted-foreground truncate italic font-display">"{e.reason}"</p>
                           )}
                         </div>
-                        <p className="font-display text-lg tabular text-foreground shrink-0">
+                        <p className="font-display text-sm sm:text-lg tabular text-foreground shrink-0">
                           {formatMoney(Number(e.amount), currency)}
                         </p>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={() => onDelete(e.id)}
-                          className="opacity-0 group-hover:opacity-100 transition-opacity w-8 h-8 p-0 hover:bg-destructive/15 hover:text-destructive"
+                          className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity w-7 h-7 sm:w-8 sm:h-8 p-0 hover:bg-destructive/15 hover:text-destructive shrink-0"
                         >
-                          <Trash2 className="w-3.5 h-3.5" />
+                          <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                         </Button>
                       </li>
                     );
