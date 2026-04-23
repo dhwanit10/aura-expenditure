@@ -49,7 +49,7 @@ export function BalanceEditDialog({ open, onOpenChange, upi, cash, cheque, onSav
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-popover border-border/40 rounded-3xl max-w-md">
+      <DialogContent className="bg-popover border-border/40 rounded-2xl sm:rounded-3xl max-w-[calc(100vw-2rem)] sm:max-w-md mx-auto">
         <DialogHeader>
           <DialogTitle className="font-display text-3xl text-gradient-warm">Adjust balances</DialogTitle>
           <DialogDescription>Set the current amount you have in each account.</DialogDescription>

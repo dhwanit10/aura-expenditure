@@ -33,7 +33,7 @@ export function ChartsPanel({ expenses, currency }: Props) {
       const total = expenses
         .filter((e) => e.expense_date === key)
         .reduce((s, e) => s + Number(e.amount), 0);
-      return { date: format(d, "d MMM"), total };
+      return { date: format(d, "d"), dateFull: format(d, "d MMM"), total };
     });
   }, [expenses]);
 
@@ -54,25 +54,25 @@ export function ChartsPanel({ expenses, currency }: Props) {
   }, [expenses]);
 
   return (
-    <section className="grid grid-cols-1 lg:grid-cols-5 gap-5 animate-fade-up" style={{ animationDelay: "0.15s" }}>
-      <div className="lg:col-span-3 glass-card grain relative p-7">
-        <div className="flex items-baseline justify-between mb-6">
+    <section className="grid grid-cols-1 lg:grid-cols-5 gap-4 sm:gap-5 animate-fade-up" style={{ animationDelay: "0.15s" }}>
+      <div className="lg:col-span-3 glass-card grain relative p-5 sm:p-7">
+        <div className="flex items-baseline justify-between mb-4 sm:mb-6">
           <div>
-            <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">Last 14 days</p>
-            <h3 className="font-display text-2xl mt-1">Daily flow</h3>
+            <p className="text-[10px] sm:text-xs uppercase tracking-[0.4em] text-muted-foreground">Last 14 days</p>
+            <h3 className="font-display text-xl sm:text-2xl mt-1">Daily flow</h3>
           </div>
         </div>
-        <div className="h-56 w-full">
+        <div className="h-44 sm:h-56 w-full -ml-2 sm:ml-0">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={dailyData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
+            <BarChart data={dailyData} margin={{ top: 10, right: 5, left: -15, bottom: 0 }}>
               <defs>
                 <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="hsl(19 100% 76%)" />
                   <stop offset="100%" stopColor="hsl(0 100% 71%)" />
                 </linearGradient>
               </defs>
-              <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" fontSize={11} tickLine={false} axisLine={false} />
-              <YAxis stroke="hsl(var(--muted-foreground))" fontSize={11} tickLine={false} axisLine={false} />
+              <XAxis dataKey="date" stroke="hsl(var(--muted-foreground))" fontSize={10} tickLine={false} axisLine={false} interval={0} />
+              <YAxis stroke="hsl(var(--muted-foreground))" fontSize={10} tickLine={false} axisLine={false} width={35} />
               <Tooltip
                 cursor={{ fill: "hsl(var(--surface-2) / 0.5)" }}
                 contentStyle={{
@@ -81,32 +81,36 @@ export function ChartsPanel({ expenses, currency }: Props) {
                   borderRadius: 12,
                   fontSize: 12,
                 }}
+                labelFormatter={(_, payload) => {
+                  if (payload?.[0]?.payload?.dateFull) return payload[0].payload.dateFull;
+                  return _;
+                }}
                 formatter={(v: any) => [`${currency}${Number(v).toLocaleString("en-IN")}`, "Spent"]}
               />
-              <Bar dataKey="total" fill="url(#barGrad)" radius={[8, 8, 0, 0]} />
+              <Bar dataKey="total" fill="url(#barGrad)" radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </div>
 
-      <div className="lg:col-span-2 glass-card grain relative p-7">
+      <div className="lg:col-span-2 glass-card grain relative p-5 sm:p-7">
         <div className="mb-4">
-          <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground">Breakdown</p>
-          <h3 className="font-display text-2xl mt-1">By category</h3>
+          <p className="text-[10px] sm:text-xs uppercase tracking-[0.4em] text-muted-foreground">Breakdown</p>
+          <h3 className="font-display text-xl sm:text-2xl mt-1">By category</h3>
         </div>
         {categoryData.length === 0 ? (
           <p className="text-muted-foreground text-sm py-12 text-center">No expenses yet</p>
         ) : (
           <div className="flex items-center gap-4">
-            <div className="w-32 h-32 relative shrink-0">
+            <div className="w-28 h-28 sm:w-32 sm:h-32 relative shrink-0">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={categoryData}
                     cx="50%"
                     cy="50%"
-                    innerRadius={38}
-                    outerRadius={60}
+                    innerRadius={32}
+                    outerRadius={52}
                     paddingAngle={3}
                     dataKey="value"
                     stroke="none"
@@ -123,7 +127,7 @@ export function ChartsPanel({ expenses, currency }: Props) {
                 <div key={d.id} className="flex items-center gap-2 text-xs">
                   <span className="w-2 h-2 rounded-full shrink-0" style={{ background: d.color }} />
                   <span className="flex-1 text-muted-foreground truncate">{d.name}</span>
-                  <span className="tabular text-foreground">{currency}{Math.round(d.value).toLocaleString("en-IN")}</span>
+                  <span className="tabular text-foreground text-[11px]">{currency}{Math.round(d.value).toLocaleString("en-IN")}</span>
                 </div>
               ))}
             </div>

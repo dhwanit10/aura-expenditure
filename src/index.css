@@ -114,7 +114,10 @@
   }
 
   /* Scrollbar */
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  @media (min-width: 640px) {
+    ::-webkit-scrollbar { width: 10px; height: 10px; }
+  }
   ::-webkit-scrollbar-track { background: hsl(var(--surface-glow)); }
   ::-webkit-scrollbar-thumb { background: hsl(var(--muted)); border-radius: 8px; }
   ::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary) / 0.5); }

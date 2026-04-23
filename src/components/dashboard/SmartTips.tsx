@@ -44,25 +44,25 @@ export function SmartTips({ expenses, balances, currency }: Props) {
   }, [expenses.length]);
 
   return (
-    <section className="glass-card grain relative p-7 animate-fade-up" style={{ animationDelay: "0.2s" }}>
-      <div aria-hidden className="absolute top-0 right-0 w-40 h-40 rounded-full bg-butter/15 blur-3xl pointer-events-none" />
-      <div className="flex items-center justify-between mb-5 relative">
+    <section className="glass-card grain relative p-5 sm:p-7 animate-fade-up" style={{ animationDelay: "0.2s" }}>
+      <div aria-hidden className="absolute top-0 right-0 w-32 sm:w-40 h-32 sm:h-40 rounded-full bg-butter/15 blur-3xl pointer-events-none" />
+      <div className="flex items-center justify-between mb-4 sm:mb-5 relative">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-butter" />
-          <p className="text-xs uppercase tracking-[0.4em] text-butter">Smart tips</p>
+          <Sparkles className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-butter" />
+          <p className="text-[10px] sm:text-xs uppercase tracking-[0.4em] text-butter">Smart tips</p>
         </div>
         <Button
           variant="ghost"
           size="sm"
           onClick={fetchTips}
           disabled={loading}
-          className="rounded-full h-8 w-8 p-0 hover:bg-butter/10 hover:text-butter"
+          className="rounded-full h-7 w-7 sm:h-8 sm:w-8 p-0 hover:bg-butter/10 hover:text-butter"
         >
-          <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
+          <RefreshCw className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${loading ? "animate-spin" : ""}`} />
         </Button>
       </div>
 
-      <div className="relative space-y-4">
+      <div className="relative space-y-3 sm:space-y-4">
         {loading && tips.length === 0 ? (
           <>
             <div className="h-4 bg-surface-2 rounded animate-pulse" />
@@ -71,9 +71,9 @@ export function SmartTips({ expenses, balances, currency }: Props) {
           </>
         ) : (
           tips.map((tip, i) => (
-            <div key={i} className="flex gap-3 animate-fade-up" style={{ animationDelay: `${i * 0.1}s` }}>
-              <span className="text-butter font-display text-xl leading-none mt-0.5">·</span>
-              <p className="text-sm leading-relaxed text-foreground/90 font-display italic">"{tip}"</p>
+            <div key={i} className="flex gap-2.5 sm:gap-3 animate-fade-up" style={{ animationDelay: `${i * 0.1}s` }}>
+              <span className="text-butter font-display text-lg sm:text-xl leading-none mt-0.5">·</span>
+              <p className="text-xs sm:text-sm leading-relaxed text-foreground/90 font-display italic">"{tip}"</p>
             </div>
           ))
         )}
