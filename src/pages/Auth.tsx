@@ -69,12 +69,12 @@ const Auth = () => {
       </div>
 
       <section className="w-full max-w-md glass-card p-6 sm:p-10 grain relative animate-scale-in">
-        <header className="mb-8 text-center">
-          <p className="text-xs uppercase tracking-[0.4em] text-muted-foreground mb-3">Aura · Ledger</p>
-          <h1 className="font-display text-5xl text-gradient-warm leading-none">
+        <header className="mb-6 sm:mb-8 text-center">
+          <p className="text-[10px] sm:text-xs uppercase tracking-[0.4em] text-muted-foreground mb-2 sm:mb-3">Aura · Ledger</p>
+          <h1 className="font-display text-4xl sm:text-5xl text-gradient-warm leading-none">
             {mode === "signin" ? "Welcome back" : "Begin"}
           </h1>
-          <p className="text-muted-foreground mt-3">
+          <p className="text-muted-foreground mt-2 sm:mt-3 text-sm sm:text-base">
             {mode === "signin" ? "Your finances, glowing again." : "Track your aura, in colour."}
           </p>
         </header>
